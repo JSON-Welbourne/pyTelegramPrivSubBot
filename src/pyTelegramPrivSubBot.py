@@ -3,7 +3,7 @@ import telebot
 import sqlite3
 import logging
 
-bot = telebot.TeleBot(config.API_TOKEN))
+bot = telebot.TeleBot(config.API_TOKEN)
 initDB()
 
 def initDB():
