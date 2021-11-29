@@ -206,4 +206,6 @@ def send_welcome(message):
         if d.get('updated',False):
             bot.reply_to(message, config.STRING_UPDATED_SELF)
 
+logging.error("Chat Bot is running!")
 bot.infinity_polling()
+logging.error("Chat Bot is Shutting Down!")
