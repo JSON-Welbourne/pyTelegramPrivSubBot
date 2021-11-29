@@ -78,12 +78,12 @@ def modify_user(message):
                 try:
                     q = con.execute(config.SQL_MATCHING_USERS,[username]).fetchall()
                 except Exception as e:
-                    logging.error(config.ERROR_MODIFY_USER_DOESNT_EXIST)
-                    bot.reply_to(message, config.ERROR_MODIFY_USER_DOESNT_EXIST)
+                    logging.error(config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
+                    bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
                 else:
                     if len(q) == 0:
-                        logging.error(config.ERROR_MODIFY_USER_NO_MATCH)
-                        bot.reply_to(message, config.ERROR_MODIFY_USER_NO_MATCH)
+                        logging.error(config.STRING_ERROR_MODIFY_USER_NO_MATCH)
+                        bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_NO_MATCH)
                     else:
                         try:
                             if command in config.ALLOW_MEHTODS:
@@ -96,8 +96,8 @@ def modify_user(message):
                                 con.execute(config.SQL_DEMOTE_USER,[username])
                             con.commit()
                         except Exception as e:
-                            logging.error(config.ERROR_MODIFY_USER_UNABLE.format(e))
-                            bot.reply_to(message,config.ERROR_MODIFY_USER_UNABLE.format(e))
+                            logging.error(config.STRING_ERROR_MODIFY_USER_UNABLE.format(e))
+                            bot.reply_to(message,config.STRING_ERROR_MODIFY_USER_UNABLE.format(e))
                         else:
                             logging.error(config.STRING_MODIFIED_USER)
                             bot.reply_to(message, config.STRING_MODIFIED_USER)
