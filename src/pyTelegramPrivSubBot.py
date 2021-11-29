@@ -17,7 +17,6 @@ def initDB():
             con.commit()
         except Exception as e:
             logging.error(config.STRING_ERROR_INIT_DB.format(e))
-        else:
         con.close()
 
 def isFromAdmin(message):
