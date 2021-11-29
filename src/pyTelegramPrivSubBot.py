@@ -33,7 +33,7 @@ def isFromAdmin(message):
         except:
             pass
         else:
-            if len(users) > 0 and all(q):
+            if len(users) > 0 and all(users):
                 admin = True
         con.close()
     return admin
