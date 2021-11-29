@@ -4,7 +4,6 @@ import sqlite3
 import logging
 
 bot = telebot.TeleBot(config.API_TOKEN)
-initDB()
 
 def initDB():
     try:
@@ -18,6 +17,8 @@ def initDB():
         except Exception as e:
             logging.error(config.STRING_ERROR_INIT_DB.format(e))
         con.close()
+
+initDB()
 
 def isFromAdmin(message):
     userID = message.from_user.id
