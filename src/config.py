@@ -34,7 +34,7 @@ SQL_INSERT_ADMIN =                  "INSERT INTO Users (id,firstName,username,ad
 SQL_INSERT_USER =                   "INSERT INTO Users (id,firstName,username) VALUES (?,?,?)"
 SQL_UPDATE_USER =                   "UPDATE Users SET firstName = ?, username = ? WHERE id = ?"
 # Strings
-STRING_ERROR_OPENING_DB             "Unable to open DB: {}"
+STRING_ERROR_OPENING_DB =           "Unable to open DB: {}"
 STRING_ERROR_USER_DOESNT_EXIST =    "Unable to get matching users"
 STRING_ERROR_USER_NO_MATCH =        "No Matching Users!"
 STRING_ERROR_USER_UNABLE =          "Unable to Update User: {}"
