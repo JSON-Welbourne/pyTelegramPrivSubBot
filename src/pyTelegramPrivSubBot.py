@@ -63,7 +63,7 @@ def get_users(message):
 def modify_user(message):
     if isFromAdmin(message):
         try:
-            command = message.text.split()[0]
+            command = message.text.split()[0][1:]
             user_id = message.text.split()[1]
         except:
             logging.error(config.STRING_ERROR_NO_ID)
@@ -86,7 +86,7 @@ def modify_user(message):
                         bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_NO_MATCH)
                     else:
                         try:
-                            if command in config.ALLOW_MEHTODS:
+                            if command in config.ALLOW_METHODS:
                                 con.execute(config.SQL_ALLOW_USER,[user_id])
                             elif command in config.UNALLOW_METHODS:
                                 con.execute(config.SQL_UNALLOW_USER,[user_id])
@@ -102,7 +102,7 @@ def modify_user(message):
                             logging.error(config.STRING_MODIFIED_USER)
                             bot.reply_to(message, config.STRING_MODIFIED_USER)
                             for user in matchingUsers:
-                                if command in config.ALLOW_MEHTODS:
+                                if command in config.ALLOW_METHODS:
                                     bot.send_message(user[0],config.STRING_SUBSCRIBED)
                                 elif command in config.UNALLOW_METHODS:
                                     bot.send_message(user[0],config.STRING_UNSUBSCRIBED)
