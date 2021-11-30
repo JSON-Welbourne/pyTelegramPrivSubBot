@@ -76,10 +76,10 @@ def modify_user(message):
                 bot.reply_to(message, config.STRING_ERROR_OPENING_DB.format(e))
             else:
                 try:
-                    matchingUsers = con.execute(config.SQL_MATCHING_USERS,[username]).fetchall()
+                    matchingUsers = con.execute(config.SQL_MATCHING_USERS,[user_id]).fetchall()
                 except Exception as e:
-                    logging.error(config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
-                    bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
+                    logging.error(config.STRING_ERROR_USER_DOESNT_EXIST)
+                    bot.reply_to(message, config.STRING_ERROR_USER_DOESNT_EXIST)
                 else:
                     if len(matchingUsers) == 0:
                         logging.error(config.STRING_ERROR_MODIFY_USER_NO_MATCH)
