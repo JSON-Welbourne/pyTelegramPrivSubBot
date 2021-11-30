@@ -48,12 +48,12 @@ def get_users(message):
             bot.reply_to(message, config.STRING_ERROR_OPENING_DB.format(e))
         else:
             try:
-                q = [row for row in con.execute(config.SQL_ALL_USERS).fetchall()]
+                users = [row for row in con.execute(config.SQL_ALL_USERS).fetchall()]
             except Exception as e:
                 logging.error(config.STRING_ERROR_USER_DOESNT_EXIST)
                 bot.reply_to(message, config.STRING_ERROR_USER_DOESNT_EXIST)
             else:
-                bot.reply_to(message, "\r\n".join([str(row) for row in q]))
+                bot.reply_to(message, "\r\n".join([str(row) for row in users]))
     else:
         logging.error(config.STRING_ERROR_NOT_AUTHORIZED)
         bot.reply_to(message, config.STRING_ERROR_NOT_AUTHORIZED)
@@ -64,7 +64,7 @@ def modify_user(message):
     if isFromAdmin(message):
         try:
             command = message.text.split()[0]
-            username = message.text.split()[1]
+            user_id = message.text.split()[1]
         except:
             logging.error(config.STRING_ERROR_NO_ID)
             bot.reply_to(message, config.STRING_ERROR_NO_ID)
@@ -76,24 +76,24 @@ def modify_user(message):
                 bot.reply_to(message, config.STRING_ERROR_OPENING_DB.format(e))
             else:
                 try:
-                    q = con.execute(config.SQL_MATCHING_USERS,[username]).fetchall()
+                    matchingUsers = con.execute(config.SQL_MATCHING_USERS,[username]).fetchall()
                 except Exception as e:
                     logging.error(config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
                     bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_DOESNT_EXIST)
                 else:
-                    if len(q) == 0:
+                    if len(matchingUsers) == 0:
                         logging.error(config.STRING_ERROR_MODIFY_USER_NO_MATCH)
                         bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_NO_MATCH)
                     else:
                         try:
                             if command in config.ALLOW_MEHTODS:
-                                con.execute(config.SQL_ALLOW_USER,[username])
+                                con.execute(config.SQL_ALLOW_USER,[user_id])
                             elif command in config.UNALLOW_METHODS:
-                                con.execute(config.SQL_UNALLOW_USER,[username])
+                                con.execute(config.SQL_UNALLOW_USER,[user_id])
                             elif command in config.PROMOTE_METHODS:
-                                con.execute(config.SQL_PROMOTE_USER,[username])
+                                con.execute(config.SQL_PROMOTE_USER,[user_id])
                             elif command in config.DEMOTE_METHODS:
-                                con.execute(config.SQL_DEMOTE_USER,[username])
+                                con.execute(config.SQL_DEMOTE_USER,[user_id])
                             con.commit()
                         except Exception as e:
                             logging.error(config.STRING_ERROR_MODIFY_USER_UNABLE.format(e))
@@ -101,15 +101,15 @@ def modify_user(message):
                         else:
                             logging.error(config.STRING_MODIFIED_USER)
                             bot.reply_to(message, config.STRING_MODIFIED_USER)
-                            for row in q:
+                            for user in matchingUsers:
                                 if command in config.ALLOW_MEHTODS:
-                                    bot.send_message(row[0],config.STRING_SUBSCRIBED)
+                                    bot.send_message(user[0],config.STRING_SUBSCRIBED)
                                 elif command in config.UNALLOW_METHODS:
-                                    bot.send_message(row[0],config.STRING_UNSUBSCRIBED)
+                                    bot.send_message(user[0],config.STRING_UNSUBSCRIBED)
                                 elif command in config.PROMOTE_METHODS:
-                                    bot.send_message(row[0],config.STRING_PROMOTED)
+                                    bot.send_message(user[0],config.STRING_PROMOTED)
                                 elif command in config.DEMOTE_METHODS:
-                                    bot.send_message(row[0],config.STRING_DEMOTED)
+                                    bot.send_message(user[0],config.STRING_DEMOTED)
                 con.close()
     else:
         logging.error(config.STRING_ERROR_NOT_AUTHORIZED)
