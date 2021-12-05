@@ -115,7 +115,7 @@ def modify_user(message):
         logging.error(config.STRING_ERROR_NOT_AUTHORIZED)
         bot.reply_to(message, config.STRING_ERROR_NOT_AUTHORIZED)
 
-@bot.message_handler(commands=config.HELP_METHODS)
+@bot.message_handler(commands=config.METHODS['HELP'])
 def help(message):
     try:
         l = [
