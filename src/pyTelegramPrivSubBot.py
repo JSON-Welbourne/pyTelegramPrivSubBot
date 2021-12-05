@@ -38,7 +38,7 @@ def isFromAdmin(message):
         con.close()
     return admin
 
-@bot.message_handler(commands=config.GET_USERS_METHODS)
+@bot.message_handler(commands=config.METHODS['GET_USERS'])
 def get_users(message):
     if isFromAdmin(message):
         try:
@@ -59,7 +59,7 @@ def get_users(message):
         bot.reply_to(message, config.STRING_ERROR_NOT_AUTHORIZED)
 
 
-@bot.message_handler(commands=config.REQUIRES_ADMIN_METHODS)
+@bot.message_handler(commands=config.METHODS['REQUIRES_ADMIN'])
 def modify_user(message):
     if isFromAdmin(message):
         try:
@@ -86,13 +86,13 @@ def modify_user(message):
                         bot.reply_to(message, config.STRING_ERROR_MODIFY_USER_NO_MATCH)
                     else:
                         try:
-                            if command in config.ALLOW_METHODS:
+                            if command in config.METHODS['ALLOW']:
                                 con.execute(config.SQL_ALLOW_USER,[user_id])
-                            elif command in config.UNALLOW_METHODS:
+                            elif command in config.METHODS['UNALLOW']:
                                 con.execute(config.SQL_UNALLOW_USER,[user_id])
-                            elif command in config.PROMOTE_METHODS:
+                            elif command in config.METHODS['PROMOTE']:
                                 con.execute(config.SQL_PROMOTE_USER,[user_id])
-                            elif command in config.DEMOTE_METHODS:
+                            elif command in config.METHODS['DEMOTE']:
                                 con.execute(config.SQL_DEMOTE_USER,[user_id])
                             con.commit()
                         except Exception as e:
@@ -102,13 +102,13 @@ def modify_user(message):
                             logging.error(config.STRING_MODIFIED_USER)
                             bot.reply_to(message, config.STRING_MODIFIED_USER)
                             for user in matchingUsers:
-                                if command in config.ALLOW_METHODS:
+                                if command in config.METHODS['ALLOW']:
                                     bot.send_message(user[0],config.STRING_SUBSCRIBED)
-                                elif command in config.UNALLOW_METHODS:
+                                elif command in config.METHODS['UNALLOW']:
                                     bot.send_message(user[0],config.STRING_UNSUBSCRIBED)
-                                elif command in config.PROMOTE_METHODS:
+                                elif command in config.METHODS['PROMOTE']:
                                     bot.send_message(user[0],config.STRING_PROMOTED)
-                                elif command in config.DEMOTE_METHODS:
+                                elif command in config.METHODS['DEMOTE']:
                                     bot.send_message(user[0],config.STRING_DEMOTED)
                 con.close()
     else:
@@ -131,7 +131,7 @@ def help(message):
     except Exception as e:
         logging.error(config.STRING_ERROR_HELP.format(e))
 
-@bot.message_handler(commands=config.START_METHODS)
+@bot.message_handler(commands=config.METHODS['START'])
 def send_welcome(message):
     d = {
         'from_user_id':         message.from_user.id,
