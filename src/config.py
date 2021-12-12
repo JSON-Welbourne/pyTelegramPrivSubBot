@@ -2,6 +2,7 @@
 SQLITE3_DB_PATH = "./chatBot.sqlite3" # SQLITE3 Database Path
 API_TOKEN = 'YOUR-API-TOKEN-HERE' # API Token from @BotFather
 API_URL = f"https://api.telegram.org/bot{API_TOKEN}" # You might change this if you are running your own server
+DISCORD_TOKEN = 'YOUR-DISCORD-API-TOKEN"
 # Methods
 METHODS = {
     'ALLOW':        ['allow',],
